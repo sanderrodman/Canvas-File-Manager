@@ -6,17 +6,38 @@
 
   "action": {
     "default_popup": "Canvas-PDF-Viewer.html",
-    "default_icon": "Canvas-PDF-Viewer.png"
+    "default_icon": "images/icon-128.png"
+  },
+
+  "icons": {
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
   },
 
   "content_scripts": [
     {
       "js": ["scripts/content.js"],
       "matches": [
-        "https://developer.chrome.com/docs/extensions/*",
-        "https://developer.chrome.com/docs/webstore/*",
         "https://*.edu/courses/*/files/*"
       ]
     }
+  ],
+
+  "background": {
+    "service_worker": "scripts/service-worker.js"
+  },
+
+  "host_permissions": [
+    "https://*.edu/courses/*/files/*"
+  ],
+
+  "permissions": [
+    "tabs",
+    "nativeMessaging",
+
+    "webRequest",
+    "webRequestAuthProvider"
   ]
 }

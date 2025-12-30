@@ -1,26 +1,53 @@
-function renderReadingTime(article) {
-  // If we weren't provided an article, we don't need to render anything.
-  if (!article) {
-    return;
-  }
+const pdfButton = document.createElement("button");
+pdfButton.textContent = "Open PDF";
+pdfButton.id = "pdf-float-btn";
 
-  const text = article.textContent;
-  const wordMatchRegExp = /[^\s]+/g; // Regular expression
-  const words = text.matchAll(wordMatchRegExp);
-  // matchAll returns an iterator, convert to array to get word count
-  const wordCount = [...words].length;
-  const readingTime = Math.round(wordCount / 200);
-  const badge = document.createElement("p");
-  // Use the same styling as the publish information in an article's header
-  badge.classList.add("color-secondary-text", "type--caption");
-  badge.textContent = `⏱️ ${readingTime} min read`;
+Object.assign(pdfButton.style, {
+  position: "fixed",
+  top: "14px",
+  right: "24px",
+  zIndex: "9999",
+  backgroundColor: "#007bff",
+  color: "#fff",
+  border: "none",
+  padding: "10px 15px",
+  borderRadius: "5px",
+  cursor: "pointer",
+  fontSize: "14px",
+  boxShadow: "0 2px 6px rgba(0,0,0,0.3)",
+});
 
-  // Support for API reference docs
-  const heading = article.querySelector("h1");
-  // Support for article docs with date
-  const date = article.querySelector("time")?.parentNode;
+pdfButton.addEventListener("mouseenter", () => {
+  pdfButton.style.backgroundColor = "#0056b3";
+});
+pdfButton.addEventListener("mouseleave", () => {
+  pdfButton.style.backgroundColor = "#007bff";
+});
 
-  (date ?? heading).insertAdjacentElement("afterend", badge);
-}
+// document.body.appendChild(pdfButton);
 
-renderReadingTime(document.querySelector("article"));
+let currentUrl = null;
+
+// in progress
+chrome.webRequest.onHeadersReceived.addListener(
+    (details) => {details.url},
+    {urls: ["https://*.edu/courses/*/files/*"]}
+);
+
+// in progress
+pdfButton.addEventListener("click", () => {
+
+  chrome.runtime.sendMessage({ action: "isDevOpen" }, (response) => {
+
+      if (response.isDevOpen) {
+
+        pdfUrl = response.pdfUrl;
+        window.close()
+
+        window.open(pdfUrl, "_blank");
+        return;
+
+    }
+  });
+});
+
