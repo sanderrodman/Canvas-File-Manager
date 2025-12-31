@@ -1,5 +1,5 @@
 {
-  "name": "Canvas PDF Viewer",
+  "name": "Canvas File Manager",
   "description": "Opens any PDF from Canvas in a new tab",
   "version": "1.0",
   "manifest_version": 3,
@@ -36,8 +36,9 @@
   "permissions": [
     "tabs",
     "nativeMessaging",
-
-    "webRequest",
-    "webRequestAuthProvider"
+    "downloads",
+    "downloads.open",
+    "webNavigation",
+    "scripting"
   ]
 }
