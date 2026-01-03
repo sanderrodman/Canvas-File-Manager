@@ -1,0 +1,1 @@
+Canvas File Organizer does not collect, store, or transmit any user data. All file organization and metadata detection are performed locally on your device to ensure your academic information remains private.
