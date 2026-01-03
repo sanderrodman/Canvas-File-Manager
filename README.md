@@ -4,4 +4,4 @@ Canvas File Manager eliminates the frustration of a cluttered Downloads folder b
 
 
 ## Privacy policy
-Canvas File Organizer does not collect, store, or transmit any user data. All file organization and metadata detection are performed locally on your device to ensure your academic information remains private.
+Canvas File Manager does not collect, store, or transmit any user data. All file organization and metadata detection are performed locally on your device to ensure your academic information remains private.
