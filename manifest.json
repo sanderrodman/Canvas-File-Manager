@@ -2,7 +2,7 @@
   "name": "Canvas File Manager",
   
   "description": "Stop cluttering Downloads. This extension manages Canvas files you download and views them fast, preventing duplicate downloads.",
-  "version": "1.0",
+  "version": "1.1",
   "manifest_version": 3,
 
   "action": {

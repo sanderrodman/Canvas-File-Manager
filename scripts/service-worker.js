@@ -1,6 +1,6 @@
 let cachedFileData = null;
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener( async (message, sender, sendResponse)  =>  {
     if (message.action === "getDownloadId") {
         const path = message.path
         const pdfUrl = message.pdfUrl
@@ -26,7 +26,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
     if (message.action === "getContentData") {
         cachedFileData = message.data;
-        chrome.action.openPopup();
+        try {
+            await chrome.action.openPopup();
+        }
+        catch {}
     }
 
     // When popup opens, it can ask for the cached data
