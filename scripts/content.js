@@ -19,7 +19,11 @@ function getFileInfo(domChange) {
 
     if (fileName && pdfUrl && course) {
         lastFileName = fileName;
-        path = sanitizeDownloadPath(`Canvas Files/${(course)}/${(fileName)}`)
+
+        safeCourse = sanitizeName(course);
+        safeFileName = sanitizeName(fileName);
+        path = `Canvas Files/${safeCourse}/${safeFileName}`;
+
         chrome.runtime.sendMessage({ action: "getContentData", data: {path, pdfUrl} }); 
     }
 }
@@ -57,31 +61,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
 });
 
-function sanitizeDownloadPath(input) {
-    if (!input || typeof input !== "string") return "file.pdf";
+function sanitizeName(name) {
 
-    let path = input.replace(/\\/g, "/");
-    path = path.replace(/^[a-zA-Z]:/, "");
-    path = path.replace(/^\/+/, "");
+    const invalidCharsRegex = /[<>:"/\\|?*\x00-\x1F]/g;
 
-    const parts = path.split("/");
-
-    const safeParts = parts
-                        .filter(Boolean)
-                        .map(segment => {
-                        
-                            if (segment === "." || segment === "..") return "";
-                            
-                            segment = segment.trim();
-                            segment = segment.replace(/[<>:"/\\|?*\x00-\x1F]/g, "_");
-                            segment = segment.replace(/[. ]+$/, "");
-
-                            if (/^(con|prn|aux|nul|com[1-9]|lpt[1-9])$/i.test(segment)) {
-                                segment = "_" + segment;
-                            }
-
-                            return segment || "file";
-        });
-
-        return safeParts.join("/");
+    return name
+        .replace(invalidCharsRegex, "-")
+        .replace(/\s+/g, " ")
+        .replace(/-+/g, "-")
+        .trim();
 }
