@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     try {
         const response = await chrome.runtime.sendMessage({ action: "getPopupData" });
-        
+  
         if (!response || !response.path || !response.pdfUrl) {
    
             return;
@@ -52,13 +52,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 function handleDownloadAndOpen(downloadId, button) {
     const listener = (delta) => {
+        
         if (delta.id === downloadId && delta.state?.current === "complete") {
             chrome.downloads.onChanged.removeListener(listener);
             
             // Update UI
             button.disabled = false;
             button.textContent = "Open File";
-            
             chrome.downloads.open(downloadId);
         }
     };

@@ -1,40 +1,39 @@
 let cachedFileData = null;
 
-chrome.runtime.onMessage.addListener( async (message, sender, sendResponse)  =>  {
+chrome.runtime.onMessage.addListener((message, sender, sendResponse)  =>  {
     if (message.action === "getDownloadId") {
         const path = message.path
         const pdfUrl = message.pdfUrl
 
         if (!path || !pdfUrl) {
             sendResponse({ error: "Missing File info" });
-        return;
         }
-
-        chrome.downloads.download(
-            { url: pdfUrl, filename: path, saveAs: false, conflictAction: "overwrite" },
-            (downloadId) => {
-            if (chrome.runtime.lastError) {
-                sendResponse({ error: chrome.runtime.lastError.message });
-            } else {
-                sendResponse({ downloadId });
-            }
+        else {
+            chrome.downloads.download(
+                { url: pdfUrl, filename: path, saveAs: false, conflictAction: "overwrite" },
+                (downloadId) => {
+                    if (chrome.runtime.lastError) {
+                        sendResponse({ error: chrome.runtime.lastError.message });
+                    } else {
+                        sendResponse({ downloadId: downloadId });
+                    }
+                }
+            );
         }
-        );
 
         return true;
     }
 
     if (message.action === "getContentData") {
         cachedFileData = message.data;
-        try {
-            await chrome.action.openPopup();
-        }
-        catch {}
+        chrome.action.openPopup().catch(() => {});
+        return false;
     }
 
     // When popup opens, it can ask for the cached data
     if (message.action === "getPopupData") {
         sendResponse(cachedFileData);
+        return false;
     }
 });
 
