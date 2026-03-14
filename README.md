@@ -1,7 +1,29 @@
-## Description
+# Canvas File Manager
 
-Canvas File Manager eliminates the frustration of a cluttered Downloads folder by changing how students interact with course materials. By automatically identifying the course name and file metadata directly from the Canvas interface, the extension ensures that every file is saved in a perfectly organized subfolder structure on your computer, such as Canvas Files/Physics 101/Lecture.pdf. Most importantly, it tracks your download history; if you have already accessed a file, the extension provides an "Open File" button to launch your local copy instantly, preventing the creation of annoying duplicates like Syllabus(1).pdf and saving you the time spent hunting through a messy file system.
+A Chrome extension that automatically organizes your Canvas LMS downloads into course-based folders.
 
+## Features
 
-## Privacy policy
-Canvas File Manager does not collect, store, or transmit any user data. All file organization and metadata detection are performed locally on your device to ensure your academic information remains private.
+- **Auto-organizes downloads** — files save to `Canvas Files/{Course Name}/{File}` instead of cluttering your Downloads folder
+- **Duplicate prevention** — tracks download history so you never end up with `Syllabus(1).pdf` again
+- **Instant file access** — already downloaded? One click opens your local copy
+- **Real-time detection** — scrapes course and file metadata directly from the Canvas UI
+
+## Install
+
+1. Clone or download this repo
+2. Open `chrome://extensions` and enable **Developer mode**
+3. Click **Load unpacked** and select the project folder
+4. Navigate to any Canvas course file page
+
+## How It Works
+
+The extension injects a content script into Canvas pages to extract the course name and file info. When you download, files are automatically routed to an organized folder structure on your machine.
+
+## Privacy
+
+All processing happens locally on your device. No data is collected, stored, or transmitted.
+
+## Tech
+
+JavaScript · Chrome Extension Manifest V3 · Chrome Downloads API · MutationObserver
