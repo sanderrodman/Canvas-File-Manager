@@ -11,10 +11,8 @@ A Chrome extension that automatically organizes your Canvas LMS downloads into c
 
 ## Install
 
-1. Clone or download this repo
-2. Open `chrome://extensions` and enable **Developer mode**
-3. Click **Load unpacked** and select the project folder
-4. Navigate to any Canvas course file page
+1. Install from the [Chrome Web Store](https://chromewebstore.google.com/detail/canvas-file-manager/bdplhpkjaklkkbgfkknlockekgngpall)
+2. Navigate to any Canvas course file page
 
 ## How It Works
 
